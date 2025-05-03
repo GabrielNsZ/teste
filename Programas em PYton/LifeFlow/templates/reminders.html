@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Lembretes</h2>
+<form method="post">
+    <input name="message" placeholder="Mensagem" required>
+    <input name="remind_date" placeholder="Data do Lembrete (YYYY-MM-DD)" required>
+    <button type="submit">Adicionar Lembrete</button>
+</form>
+<ul>
+    {% for r in reminders %}
+    <li>
+        {{ r[1] }} - {{ r[2] }}
+        <a href="/delete_reminder/{{ r[0] }}">🗑</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

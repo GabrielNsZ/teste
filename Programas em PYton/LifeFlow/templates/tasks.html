@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Tarefas</h2>
+<form method="post">
+    <input name="title" placeholder="Título" required>
+    <input name="description" placeholder="Descrição">
+    <input name="due_date" placeholder="Prazo (YYYY-MM-DD)">
+    <button type="submit">Adicionar</button>
+</form>
+<ul>
+    {% for t in tasks %}
+    <li>
+        <strong>{{ t[1] }}</strong> - {{ t[2] }} | {{ t[3] }}
+        {% if not t[4] %}
+            <a href="/complete_task/{{ t[0] }}">✔</a>
+        {% else %}
+            ✅
+        {% endif %}
+        <a href="/delete_task/{{ t[0] }}">🗑</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

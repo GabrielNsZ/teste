@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Notas</h2>
+<form method="post">
+    <input name="title" placeholder="Título" required>
+    <textarea name="content" placeholder="Conteúdo" required></textarea>
+    <button type="submit">Adicionar Nota</button>
+</form>
+<ul>
+    {% for n in notes %}
+    <li>
+        <strong>{{ n[1] }}</strong><br>{{ n[2] }}
+        <a href="/delete_note/{{ n[0] }}">🗑</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
