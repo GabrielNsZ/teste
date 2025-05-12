@@ -1,0 +1,64 @@
+<!-- templates/tasks.html -->
+{% extends 'base.html' %}
+
+{% block title %}Minhas Tarefas{% endblock %}
+
+{% block content %}
+<h3>Minhas Tarefas</h3>
+
+<form method="post" action="/add_task" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <input type="text" name="title" class="form-control" placeholder="Título" required>
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="description" class="form-control" placeholder="Descrição">
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="date" class="form-control">
+    </div>
+    <div class="col-md-2">
+        <select name="importance" class="form-select">
+            <option value="Baixa">Baixa</option>
+            <option value="Média">Média</option>
+            <option value="Alta">Alta</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Adicionar</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Data</th>
+            <th>Importância</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <form method="post" action="/update_task/{{ task[0] }}">
+                <td><input type="text" name="title" value="{{ task[2] }}" class="form-control"></td>
+                <td><input type="text" name="description" value="{{ task[3] }}" class="form-control"></td>
+                <td><input type="date" name="date" value="{{ task[4] }}" class="form-control"></td>
+                <td>
+                    <select name="importance" class="form-select">
+                        <option value="Baixa" {% if task[5] == 'Baixa' %}selected{% endif %}>Baixa</option>
+                        <option value="Média" {% if task[5] == 'Média' %}selected{% endif %}>Média</option>
+                        <option value="Alta" {% if task[5] == 'Alta' %}selected{% endif %}>Alta</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-sm btn-success">Salvar</button>
+                    <a href="/delete_task/{{ task[0] }}" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </form>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

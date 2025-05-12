@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Minhas Anotações{% endblock %}
+
+{% block content %}
+<h3>Nova Anotação</h3>
+<form method="post" action="/notes">
+    <div class="mb-3">
+        <input type="text" name="title" class="form-control" placeholder="Título da nota" required>
+    </div>
+    <div class="mb-3">
+        <textarea name="content" rows="5" class="form-control" placeholder="Escreva sua anotação..." required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+
+<hr>
+
+<h4>Minhas Anotações</h4>
+<div class="list-group">
+    {% for note in notes %}
+    <div class="list-group-item">
+        <form method="post" action="/update_note/{{ note[0] }}">
+            <div class="mb-2">
+                <input type="text" name="title" class="form-control" value="{{ note[1] }}" required>
+            </div>
+            <div class="mb-2">
+                <textarea name="content" rows="3" class="form-control">{{ note[2] }}</textarea>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success btn-sm">Atualizar</button>
+                <a href="/delete_note/{{ note[0] }}" class="btn btn-danger btn-sm">Deletar</a>
+            </div>
+        </form>
+    </div>
+    {% else %}
+    <p class="text-muted">Você ainda não criou nenhuma anotação.</p>
+    {% endfor %}
+</div>
+{% endblock %}
